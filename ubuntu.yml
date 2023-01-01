@@ -19,6 +19,7 @@
           - tree
           - zoiper5
           - discord
+          - globalprotect
     - block:
       - name: Install Google Key
         apt_key: 
