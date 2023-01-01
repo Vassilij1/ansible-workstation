@@ -6,7 +6,7 @@
   tasks:
 
     - name: Installing Linux Apps
-      apt:
+      package:
         name: '{{ item }}'
         install_recommends: yes
         state: present
@@ -17,6 +17,8 @@
           - wget
           - ncdu
           - tree
+          - zoiper5
+          - discord
     - block:
       - name: Install Google Key
         apt_key: 
@@ -36,57 +38,4 @@
         unarchive:
           src: 'https://releases.hashicorp.com/vault/1.8.1/vault_1.8.1_linux_amd64.zip'
           dest: /usr/local/bin
-          remote_src: yesr
-          
-# OPTIONAL:
-#  - PEEK - Lightweight Screen Recorder that can export as GIF
-#  - OBS-STUDIO - Screen Recorder and Casting Software 
-#  - Brave Browser - Secure web browser
-#  - Ulauncher - Application Launcher
-
-    - block:
-      - name: Adding Peek Repository
-        become: true
-        apt_repository:
-          repo: 'ppa:peek-developers/stable'
-      - name: Install Peek
-        become: true
-        apt:
-          name: peek
-
-    - block:
-      - name: Install obsproject Ubuntu Repo
-        become: true
-        apt_repository:
-          repo: 'ppa:obsproject/obs-studio'
-      - name: Install obs Studio
-        become: true
-        apt:
-          name: obs-studio
-
-    - block: 
-      - name: Install Brave Key
-        become: true
-        apt_key:
-          url: 'https://brave-browser-apt-release.s3.brave.com/brave-core.asc'
-          state: present
-      - name: Install Brave Repository
-        become: true
-        apt_repository:
-          repo: 'deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main'
-          state: present
-          filename: brave
-      - name: Install Brave Browser
-        become: true
-        apt:
-          name: brave-browser
-
-    - block:
-      - name: Adding Ulauncher Repository
-        become: true
-        apt_repository:
-          repo: 'ppa:agornostal/ulauncher'
-      - name: Install Ulauncher
-        become: true
-        apt:
-          name: ulauncher
+          remote_src: yes
