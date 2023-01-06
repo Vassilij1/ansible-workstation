@@ -5,7 +5,8 @@
   become: true
   vars:
     so_user: 
-    vpn_user: 
+    vpn_user:
+    vpn_url:
     ramal: 
     repo_url:
     repo_user: 
