@@ -101,6 +101,11 @@
       - name: Renomeando diretório do Sankhya
         shell: 'mv /home/{{ so_user }}/*Sankhya* /home/{{ so_user }}/Sankhya'
         when: not sankhya_installed.stat.exists
+      - name: Garantindo owner do diretório Sankhya
+        file:
+          path: '/home/{{ so_user }}/Sankhya'
+          owner: '{{ so_user }}'
+          group: '{{ so_user }}'
       - name: Garantindo que exista o diretório DB Sankhya
         file:
           path: '/home/{{ so_user }}/.config/Navegador/Sankhya/db/'
@@ -155,13 +160,19 @@
           username: '{{ repo_user }}'
           password: '{{ repo_pass }}'
         when: not globalprotect.stat.exists
-      - name: Garantindo que o GlobalProtect esteja instalado
-        apt:
-          deb: '/home/{{ so_user }}/Downloads/globalprotect.deb'
+      - name: Garantindo que exista o diretório config do GlobalProtect
+        file:
+          path: '/home/{{ so_user }}/.GlobalProtect'
+          owner: '{{ so_user }}'
+          group: '{{ so_user }}'
+          state: directory
       - name: Garantindo configuração do GlobalProtect
         template:
           src: files/pangpa.xml.j2
           dest: '/home/{{ so_user }}/.GlobalProtect/pangpa.xml'
+      - name: Garantindo que o GlobalProtect esteja instalado
+        apt:
+          deb: '/home/{{ so_user }}/Downloads/globalprotect.deb'
       - name: Garantido que exista atalho para o GlobalProtect
         copy:
           src: /usr/share/applications/globalprotect.desktop
