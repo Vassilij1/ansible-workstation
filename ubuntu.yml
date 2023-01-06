@@ -60,10 +60,11 @@
         apt:
           deb: '/home/{{ so_user }}/Downloads/zoiper.deb'
       - name: Garantindo que exista o diretório de config Zoiper
-        copy:
+        file:
           path: '/home/{{ so_user }}/.Zoiper5'
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
+          state: directory
       - name: Garantindo configuração do Zoiper
         template:
           src: files/Config.xml.j2
@@ -100,10 +101,11 @@
         shell: 'mv /home/{{ so_user }}/*Sankhya* /home/{{ so_user }}/Sankhya'
         when: not sankhya_installed.stat.exists
       - name: Garantindo que exista o diretório DB Sankhya
-        copy:
+        file:
           path: '/home/{{ so_user }}/.config/Navegador/Sankhya/db/'
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
+          state: directory
       - name: Garantido que exista arquivo de configuração do Sankhya
         template:
           src: files/webclient.db.j2
