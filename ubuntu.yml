@@ -10,9 +10,9 @@
     repo_url:
     repo_user: 
     repo_pass: 
-
+    erp_url:
   tasks:
-    - name: Installing Linux Apps
+    - name: Instalando pacotes linux
       package:
         name: '{{ item }}'
         install_recommends: yes
@@ -37,6 +37,13 @@
       - name: Garantindo que o navegador Google Chrome esteja instalado
         apt:
           name: google-chrome-stable
+      - name: Garantido que exista atalho para o Google Chrome
+        copy:
+          src: /usr/share/applications/Google-chrome.desktop
+          dest: '/home/{{ so_user }}/Área de Trabalho/'
+          owner: '{{ so_user }}'
+          group: '{{ so_user }}'
+          mode: '0775'
     - block:
       - name: Verificando se existe instalador para o Zoiper
         stat:
@@ -56,6 +63,13 @@
         template:
           src: files/Config.xml.j2
           dest: '/home/{{ so_user }}/.Zoiper5/Config.xml'
+      - name: Garantido que exista atalho para o Zoiper
+        copy:
+          src: /usr/share/applications/Zoiper5.desktop
+          dest: '/home/{{ so_user }}/Área de Trabalho/'
+          owner: '{{ so_user }}'
+          group: '{{ so_user }}'
+          mode: '0775'
     - block:
       - name: Verificando se existe instalador para o Sankhya
         stat:
@@ -88,9 +102,9 @@
           group: '{{ so_user }}'
           mode: '0664'
       - name: Garantido que exista atalho para o Sankhya
-        copy:
-          src: files/Sankhya.desktop
-          dest: '/home/{{ so_user }}/Área de Trabalho/'
+        template:
+          src: files/Sankhya.desktop.j2
+          dest: '/home/{{ so_user }}/Área de Trabalho/Sankhya.desktop'
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
           mode: '0775'
@@ -109,6 +123,13 @@
       - name: Garantindo que o Discord esteja instalado
         apt:
           deb: '/home/{{ so_user }}/Downloads/discord.deb'
+      - name: Garantido que exista atalho para o Discord
+        copy:
+          src: /usr/share/applications/discord.desktop
+          dest: '/home/{{ so_user }}/Área de Trabalho/'
+          owner: '{{ so_user }}'
+          group: '{{ so_user }}'
+          mode: '0775'
     - block:
       - name: Verificando se existe instalador para o GlobalProtect
         stat:
@@ -130,7 +151,7 @@
           dest: '/home/{{ so_user }}/.GlobalProtect/pangpa.xml'
       - name: Garantido que exista atalho para o GlobalProtect
         copy:
-          src: files/globalprotect.desktop
+          src: /usr/share/applications/globalprotect.desktop
           dest: '/home/{{ so_user }}/Área de Trabalho/'
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
