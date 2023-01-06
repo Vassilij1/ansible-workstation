@@ -106,6 +106,8 @@
           path: '/home/{{ so_user }}/Sankhya'
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
+          state: directory
+          recurse: yes
       - name: Garantindo que exista o diretório DB Sankhya
         file:
           path: '/home/{{ so_user }}/.config/Navegador/Sankhya/db/'
