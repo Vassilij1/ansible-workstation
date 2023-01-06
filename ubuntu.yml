@@ -182,6 +182,21 @@
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
           mode: '0775'
+    - block:
+      - name: Verificando se existe instalador para o Teamviewer
+        stat:
+          path: '/home/{{ so_user }}/Downloads/teamviewer.deb'
+        register: teamviewer
+      - name: Tentando baixar o Teamviewer
+        get_url:
+          url: 'https://download.teamviewer.com/download/linux/teamviewer_amd64.deb'
+          dest: '/home/{{ so_user }}/Downloads/teamviewer.deb'
+          username: '{{ repo_user }}'
+          password: '{{ repo_pass }}'
+        when: not teamviewer.stat.exists
+      - name: Garantindo que o Teamviewer esteja instalado
+        apt:
+          deb: '/home/{{ so_user }}/Downloads/teamviewer.deb'
 
 # EXEMPLOS:
 #    - block:
