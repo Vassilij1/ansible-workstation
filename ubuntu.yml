@@ -39,7 +39,7 @@
           name: google-chrome-stable
       - name: Garantido que exista atalho para o Google Chrome
         copy:
-          src: /usr/share/applications/Google-chrome.desktop
+          src: /usr/share/applications/google-chrome.desktop
           dest: '/home/{{ so_user }}/Área de Trabalho/'
           owner: '{{ so_user }}'
           group: '{{ so_user }}'
