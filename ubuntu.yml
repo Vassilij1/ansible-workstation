@@ -25,6 +25,7 @@
           - wget
           - ncdu
           - tree
+          - default-jre
     - block:
       - name: Garantindo que a chave para o repositório Google esteja presente
         apt_key: 
